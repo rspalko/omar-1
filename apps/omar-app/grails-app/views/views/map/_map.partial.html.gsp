@@ -14,33 +14,7 @@
         <div class="col-sm-5">
           <form id="searchForm" class="searchForm">
             <div class="input-group input-group-sm" ng-controller="SearchController as search">
-              <span class="input-group-btn">
-                <button
-                  class="{{search.imageIdClass}}"
-                  type="button"
-                  ng-click="search.byImageId()"
-                  tooltip-placement="bottom"
-                  uib-tooltip="Search by Image ID">
-                    <span class="glyphicon glyphicon-picture"></span>
-                </button>
-                <!-- <button
-                  class="{{search.coordinatesClass}}"
-                  type="button"
-                  ng-click="search.byCoordinates()"
-                  tooltip-placement="bottom"
-                  uib-tooltip="Search by Coordinates">
-                  <span class="glyphicon glyphicon-screenshot"></span>
-                </button> -->
-                <button
-                  class="{{search.placeClass}}"
-                  type="button"
-                  ng-click="search.byPlace()"
-                  tooltip-placement="bottom"
-                  uib-tooltip="Search by Place Name">
-                    <span class="glyphicon glyphicon-map-marker"></span>
-                </button>
-              </span>
-              <input id="searchInput" type="text" ng-model="search.searchInput" ng-paste="search.copyPastedImageId($event)" class="form-control" placeholder="{{search.placeholder}}" autofocus>
+              <input id="searchInput" type="text" ng-model="search.searchInput" class="form-control" placeholder="{{search.placeholder}}" autofocus>
               <span class="input-group-btn">
                 <button class="btn btn-info" type="button" ng-click="search.executeSearch()" ng-disabled="search.searchButtonDisabled"><span class="glyphicon glyphicon-search"></span></button>
                 <button class="btn btn-default" type="button" ng-click="search.resetSearchInput()"><span class="glyphicon glyphicon-remove"></span></button>
@@ -762,17 +736,17 @@
                 <div class="row">
                   <div class="col-md-12">
                     <p class="text-primary" style="margin-top:.2em;">
-                      <a href="{{list.o2baseUrl}}/#/mapOrtho?layers={{image.properties.id}}" target="_blank">
-                        <i class="fa fa-map-marker fa-border text-primary"
-                         style="cursor: pointer;"
-                         tooltip-placement="right"
-                         uib-tooltip="View rectified image"></i>&nbsp;&nbsp;
-                      </a>
                       <a href="{{list.o2baseUrl}}/#/mapImage?filename={{image.properties.filename}}&entry_id={{image.properties.entry_id}}&width={{image.properties.width}}&height={{image.properties.height}}&bands=default&numOfBands={{image.properties.number_of_bands}}&imageId={{image.properties.id}}" target="_blank">
                         <i class="fa fa-desktop fa-border text-primary"
                          style="cursor: pointer;"
                          tooltip-placement="right"
                          uib-tooltip="View raw image"></i>&nbsp;&nbsp;
+                      </a>
+                      <a href="{{list.o2baseUrl}}/#/mapOrtho?layers={{image.properties.id}}" target="_blank">
+                        <i class="fa fa-map-marker fa-border text-primary"
+                         style="cursor: pointer;"
+                         tooltip-placement="right"
+                         uib-tooltip="View rectified image"></i>&nbsp;&nbsp;
                       </a>
                       <a ng-show="{{list.kmlSuperOverlayAppEnabled}}" href="{{list.kmlSuperOverlayLink}}/superOverlay/createKml/{{image.properties.id}}">
                         <i class="fa fa-map fa-border text-primary"
