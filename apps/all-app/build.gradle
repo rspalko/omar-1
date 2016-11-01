@@ -4,7 +4,14 @@ buildscript {
   }
   repositories {
     mavenLocal()
-    maven { url "https://repo.grails.org/grails/core" }
+    if(System.env.OSSIM_MAVEN_PROXY)
+    {
+        maven { url "${System.env.OSSIM_MAVEN_PROXY}" }
+    }
+    else
+    {
+      maven { url "https://repo.grails.org/grails/core" }
+    }
   }
   dependencies {
     classpath "org.grails:grails-gradle-plugin:$grailsVersion"
@@ -48,7 +55,14 @@ assets {
 
 repositories {
   mavenLocal()
-  maven { url "https://repo.grails.org/grails/core" }
+    if(System.env.OSSIM_MAVEN_PROXY)
+    {
+        maven { url "${System.env.OSSIM_MAVEN_PROXY}" }
+    }
+    else
+    {
+        mavenCentral()
+    }
 }
 
 dependencyManagement {
@@ -69,8 +83,8 @@ grails {
     compile project( ':omar-wfs' )
     compile project( ':omar-wms' )
     compile project( ':omar-wmts' )
-    compile project( ':omar-predio' )
-//      compile project( ':omar-security' )
+    compile project( ':omar-mensa' )
+    // compile project( ':omar-security' )
     compile project( ':omar-jpip' )
     compile project( ':omar-download' )
 compile project( ':omar-superoverlay' )

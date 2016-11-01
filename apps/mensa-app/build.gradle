@@ -4,7 +4,14 @@ buildscript {
     }
     repositories {
         mavenLocal()
-        maven { url "https://repo.grails.org/grails/core" }
+        if(System.env.OSSIM_MAVEN_PROXY)
+        {
+            maven { url "${System.env.OSSIM_MAVEN_PROXY}" }
+        }
+        else
+        {
+          maven { url "https://repo.grails.org/grails/core" }
+        }
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
@@ -30,7 +37,14 @@ ext {
 
 repositories {
     mavenLocal()
-    maven { url "https://repo.grails.org/grails/core" }
+    if(System.env.OSSIM_MAVEN_PROXY)
+    {
+        maven { url "${System.env.OSSIM_MAVEN_PROXY}" }
+    }
+    else
+    {
+      maven { url "https://repo.grails.org/grails/core" }
+    }
 }
 
 dependencyManagement {
@@ -67,6 +81,7 @@ dependencies {
     testCompile "org.grails.plugins:geb"
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
+    compile "org.grails.plugins:grails3-cors-interceptor:1.1.0"
 
     compile "org.springframework.cloud:spring-cloud-starter-config"
     compile "org.springframework.cloud:spring-cloud-starter-eureka"
