@@ -1,1 +1,1 @@
-./gradlew --offline -Dserver.port=8082 -Dgrails.reload.enabled=true -Dgrails.env=prod -Dspring.config.location=/opt/ossim-1.9.0-src/ossim-1.9.0/o2/install/share/omar/wms-app/wms-app.yml -Djava.awt.headless=true bootRun
+./gradlew --offline -Dserver.port=8082 -Dgrails.run.active=true -Dgrails.reload.enabled=true -Dgrails.env=dev -Dspring.config.location=/opt/ossim-1.9.0-src/ossim-1.9.0/o2/install/share/omar/wms-app/wms-app.yml -Djava.awt.headless=true bootRun

@@ -58,7 +58,15 @@ dependencyManagement {
 }
 
 dependencies {
-    compile project( ':omar-wms' )
+  grails {
+    exploded = true
+    //noinspection GroovyAssignabilityCheck
+    plugins {
+      compile project( ':omar-wms' )
+
+    }
+  }
+  //  compile project( ':omar-wms' )
   compile "org.grails.plugins:hibernate5"
   compile "org.hibernate:hibernate-core:5.0.10.Final"
   compile "org.hibernate:hibernate-ehcache:5.0.10.Final"
@@ -87,6 +95,7 @@ dependencies {
 
 bootRun {
     systemProperty "server.port", System.properties['server.port']
+    systemProperty "grails.run.active", System.properties['grails.run.active']
     systemProperty "grails.reload.enabled", System.properties['grails.reload.enabled']
     systemProperty "grails.env", System.properties['grails.env']
     systemProperty "spring.config.location", System.properties['spring.config.location']
