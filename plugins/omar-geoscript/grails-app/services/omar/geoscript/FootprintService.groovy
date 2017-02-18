@@ -12,6 +12,11 @@ import grails.transaction.Transactional
 
 import omar.core.ISO8601DateParser
 
+// RP - colors not rendering correctly
+import java.awt.RenderingHints
+import org.geotools.renderer.lite.StreamingRenderer
+import org.geotools.factory.Hints
+
 @Transactional(readOnly=true)
 class FootprintService
 {
@@ -29,6 +34,7 @@ class FootprintService
     }.get()
 
     Workspace.withWorkspace( geoscriptService.getWorkspace( layerInfo.workspaceInfo.workspaceParams ) ) { workspace ->
+      workspace.ds.setFetchSize(10000)
 
       def outlineLookupTable = styles[params.styles]
 
@@ -36,9 +42,10 @@ class FootprintService
         ( stroke( color: new Color( v.color ) ) + fill( opacity: 0.0 ) ).where( v.filter )
       }
 
-      def x = outlineLookupTable.keySet().collect { "'${it}'" }.join( ',' )
+      // Not using file_type, so commenting this out
+      //def x = outlineLookupTable.keySet().collect { "'${it}'" }.join( ',' )
 
-      style << ( stroke( color: '#000000' ) + fill( opacity: 0.0 ) ).where( "file_type not in (${x})" )
+      //style << ( stroke( color: '#000000' ) + fill( opacity: 0.0 ) ).where( "file_type not in (${x})" )
 
       def footprints = new QueryLayer( workspace[layerName], style as Composite )
       def viewBbox = new Bounds( *( params.bbox.split( ',' )*.toDouble() ), params.srs )
@@ -87,6 +94,18 @@ class FootprintService
           proj: viewBbox.proj,
           layers: [footprints]
       )
+     
+      map.renderer.setGeneralizationDistance(grailsApplication.config.footprintThreshold ?: 0.0)
+      Rendering hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF)
+      hints.add(new RenderingHints(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED))
+      hints.add(new RenderingHints(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED))
+      hints.add(new RenderingHints(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR))
+      hints.add(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED))
+      map.renderer.setJava2DHints(hints)
+
+      map.renderer.setRendererHints([(StreamingRenderer.SCALE_COMPUTATION_METHOD_KEY):StreamingRenderer.SCALE_OGC,(StreamingRenderer.LINE_WIDTH_OPTIMIZATION_KEY):Boolean.FALSE,(StreamingRenderer.ADVANCED_PROJECTION_HANDLING_KEY):false,(StreamingRenderer.CONTINUOUS_MAP_WRAPPING):false,(StreamingRenderer.OPTIMIZE_FTS_RENDERING_KEY):true])
+
+
 
       if ( map?.type?.equalsIgnoreCase('gif') ) {
         map.@renderers['gif'] = new TransparentGif()

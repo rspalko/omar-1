@@ -85,3 +85,11 @@ dependencies {
   compile "org.springframework.cloud:spring-cloud-starter-eureka"
 
 }
+
+bootRun {
+    systemProperty "server.port", System.properties['server.port']
+    systemProperty "grails.reload.enabled", System.properties['grails.reload.enabled']
+    systemProperty "grails.env", System.properties['grails.env']
+    systemProperty "spring.config.location", System.properties['spring.config.location']
+    systemProperty "java.awt.headless", System.properties['java.awt.headless']
+}

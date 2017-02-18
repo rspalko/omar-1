@@ -1,0 +1,1 @@
+./gradlew --offline -Dserver.port=8081 -Dgrails.reload.enabled=true -Dgrails.env=prod --Dspring.config.location=/opt/ossim-1.9.0-src/ossim-1.9.0/o2/install/share/omar/wfs-app/wfs-app.yml -Djava.awt.headless=true bootRun
