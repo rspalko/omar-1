@@ -312,12 +312,12 @@ wfs:
   datastores:
 
       - namespaceId: omar
-        datastoreId: omardb-1.8.20-prod
+        datastoreId: omardb-1.9.0-prod
         datastoreParams:
           dbtype: postgis
           host: localhost
           port: '5432'
-          database: omardb-1.8.20-prod
+          database: omardb-1.9.0-prod
           user: postgres
           passwd: postgres
           'Expose primary keys': 'true'
@@ -332,7 +332,7 @@ wfs:
           - omar
           - raster_entry
           - features
-        datastoreId: omardb-1.8.20-prod
+        datastoreId: omardb-1.9.0-prod
 
       - name: video_data_set
         title: video_data_set
@@ -341,4 +341,4 @@ wfs:
           - omar
           - video_data_set
           - features
-        datastoreId: omardb-1.8.20-prod
+        datastoreId: omardb-1.9.0-prod
